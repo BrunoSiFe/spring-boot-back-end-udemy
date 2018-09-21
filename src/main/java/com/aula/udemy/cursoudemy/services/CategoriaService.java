@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aula.udemy.cursoudemy.entities.CategoriaEntity;
+import com.aula.udemy.cursoudemy.exceptions.ObjectNotFoundException;
 import com.aula.udemy.cursoudemy.repositories.CategoriasRepository;
 
 @Service
@@ -18,7 +19,8 @@ public class CategoriaService {
 		
 		Optional<CategoriaEntity> categoriaEntity = categoriaRepository.findById(idCategoria);
 		
-		return categoriaEntity.orElse(null);
+		return categoriaEntity.orElseThrow(() -> 
+					new ObjectNotFoundException("Objeto não encontrado! Id: " + idCategoria + ", Tipo: " + CategoriaEntity.class.getName())); 
 	}
 	
 }
