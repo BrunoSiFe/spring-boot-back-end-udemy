@@ -2,28 +2,41 @@ package com.aula.udemy.cursoudemy.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import com.aula.udemy.cursoudemy.dtos.CategoriaDTO;
+
+@Entity(name="TBL_CATEGORIA")
 public class CategoriaEntity implements Serializable{
 
 	private static final long serialVersionUID = 1l;
 	
-	private Integer id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID_CATEGORIA")
+	private Integer idCategoria;
 
+	@Column(name="DS_NOME")
 	private String nome;
 
 	public CategoriaEntity() {
 	}
 
-	public CategoriaEntity(Integer id, String nome) {
-		this.id = id;
+	public CategoriaEntity(Integer idCategoria, String nome) {
+		this.idCategoria = idCategoria;
 		this.nome = nome;
 	}
 
 	public Integer getId() {
-		return id;
+		return idCategoria;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(Integer idCategoria) {
+		this.idCategoria = idCategoria;
 	}
 
 	public String getNome() {
@@ -38,7 +51,7 @@ public class CategoriaEntity implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idCategoria == null) ? 0 : idCategoria.hashCode());
 		return result;
 	}
 
@@ -55,18 +68,28 @@ public class CategoriaEntity implements Serializable{
 
 		CategoriaEntity other = (CategoriaEntity) obj;
 
-		if (id == null) {
+		if (idCategoria == null) {
 			
-			if (other.id != null)
+			if (other.idCategoria != null)
 				return false;
 			
-		} else if (!id.equals(other.id)) {
+		} else if (!idCategoria.equals(other.idCategoria)) {
 			
 			return false;
 			
 		}
 		
 		return true;
+	}
+	
+	public CategoriaDTO dePara(CategoriaEntity categoriaEntity) {
+		
+		CategoriaDTO categoria = new CategoriaDTO();
+		
+		categoria.setIdCategoria(categoriaEntity.getId());
+		categoria.setNome(categoriaEntity.getNome());
+		
+		return categoria;
 	}
 
 }

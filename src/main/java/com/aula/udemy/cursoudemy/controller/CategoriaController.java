@@ -1,30 +1,31 @@
 package com.aula.udemy.cursoudemy.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aula.udemy.cursoudemy.dtos.CategoriaDTO;
 import com.aula.udemy.cursoudemy.entities.CategoriaEntity;
+import com.aula.udemy.cursoudemy.services.CategoriaService;
 
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaController {
 
+	@Autowired
+	private CategoriaService categoriaService;
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public List<CategoriaEntity> listar() {
+	@RequestMapping(value= "/{idCategoria}",method=RequestMethod.GET)
+	public ResponseEntity<CategoriaDTO> buscarCategoriaPorId(@PathVariable Integer idCategoria) {
 		
-		CategoriaEntity cat1 = new CategoriaEntity(1,"Informática");
-		CategoriaEntity cat2 = new CategoriaEntity(2,"Calçados");
+		CategoriaEntity categoriaEntity = categoriaService.buscarCategoriaPorId(idCategoria);
 		
-		List<CategoriaEntity> listaCategorias = new ArrayList<>();
-		listaCategorias.add(cat1);
-		listaCategorias.add(cat2);
+		CategoriaDTO categoria = categoriaEntity.dePara(categoriaEntity);
 		
-		return listaCategorias;
+		return ResponseEntity.ok(categoria);
 		
 	}
 }
