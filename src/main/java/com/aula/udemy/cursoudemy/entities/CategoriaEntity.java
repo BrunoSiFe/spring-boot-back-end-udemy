@@ -1,12 +1,15 @@
 package com.aula.udemy.cursoudemy.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import com.aula.udemy.cursoudemy.dtos.CategoriaDTO;
 
@@ -22,6 +25,9 @@ public class CategoriaEntity implements Serializable{
 
 	@Column(name="DS_NOME")
 	private String nome;
+	
+	@ManyToMany(mappedBy="listaCategorias")
+	private List<ProdutosEntity> listaProdutos = new ArrayList<>();
 
 	public CategoriaEntity() {
 	}
@@ -31,11 +37,11 @@ public class CategoriaEntity implements Serializable{
 		this.nome = nome;
 	}
 
-	public Integer getId() {
+	public Integer getIdCategoria() {
 		return idCategoria;
 	}
 
-	public void setId(Integer idCategoria) {
+	public void setIdCategoria(Integer idCategoria) {
 		this.idCategoria = idCategoria;
 	}
 
@@ -45,6 +51,14 @@ public class CategoriaEntity implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<ProdutosEntity> getListaProdutos() {
+		return listaProdutos;
+	}
+
+	public void setListaProdutos(List<ProdutosEntity> listaProdutos) {
+		this.listaProdutos = listaProdutos;
 	}
 
 	@Override
@@ -86,7 +100,7 @@ public class CategoriaEntity implements Serializable{
 		
 		CategoriaDTO categoria = new CategoriaDTO();
 		
-		categoria.setIdCategoria(categoriaEntity.getId());
+		categoria.setIdCategoria(categoriaEntity.getIdCategoria());
 		categoria.setNome(categoriaEntity.getNome());
 		
 		return categoria;
