@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.aula.udemy.cursoudemy.dtos.EnderecoDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity(name="TBL_ENDERECO")
 public class EnderecoEntity implements Serializable{
 
@@ -35,6 +38,7 @@ public class EnderecoEntity implements Serializable{
 	@Column(name="ds_cep")
 	private String cep;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="id_cliente")
 	private ClienteEntity cliente;
@@ -161,4 +165,18 @@ public class EnderecoEntity implements Serializable{
 		return true;
 	}
 
+	public EnderecoDTO dePara() {
+		
+		EnderecoDTO endereco = new EnderecoDTO();
+		
+		endereco.setBairro(this.getBairro());
+		endereco.setCep(this.getCep());
+		endereco.setComplemento(this.getComplemento());
+		endereco.setLogradouro(this.getLogradouro());
+		endereco.setIdEndereco(this.getIdEndereco());
+		endereco.setNumero(this.getNumero());
+		
+		return endereco;
+		
+	}
 }

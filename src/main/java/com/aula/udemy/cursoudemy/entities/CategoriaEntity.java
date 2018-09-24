@@ -98,13 +98,13 @@ public class CategoriaEntity implements Serializable{
 		return true;
 	}
 	
-	public CategoriaDTO dePara(CategoriaEntity categoriaEntity) {
+	public CategoriaDTO dePara() {
 		
 		CategoriaDTO categoria = new CategoriaDTO();
 		
-		categoria.setIdCategoria(categoriaEntity.getIdCategoria());
-		categoria.setNome(categoriaEntity.getNome());
-		categoria.setListaProdutos(categoriaEntity.getListaProdutos());
+		categoria.setIdCategoria(this.getIdCategoria());
+		categoria.setNome(this.getNome());
+		categoria.setListaProdutos(this.getListaProdutos());
 		
 		return categoria;
 	}

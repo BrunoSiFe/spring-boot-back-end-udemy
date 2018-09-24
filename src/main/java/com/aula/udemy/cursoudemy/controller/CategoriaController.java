@@ -23,7 +23,7 @@ public class CategoriaController {
 		
 		CategoriaEntity categoriaEntity = categoriaService.buscarCategoriaPorId(idCategoria);
 		
-		CategoriaDTO categoria = categoriaEntity.dePara(categoriaEntity);
+		CategoriaDTO categoria = categoriaEntity.dePara();
 		
 		return ResponseEntity.ok(categoria);
 		

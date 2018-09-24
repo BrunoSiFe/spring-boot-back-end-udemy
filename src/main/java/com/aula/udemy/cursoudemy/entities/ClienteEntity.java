@@ -1,6 +1,7 @@
 package com.aula.udemy.cursoudemy.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.aula.udemy.cursoudemy.constants.enums.TipoClienteEnum;
+import com.aula.udemy.cursoudemy.dtos.ClienteDTO;
+import com.aula.udemy.cursoudemy.dtos.EnderecoDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name="TBL_CLIENTE")
 public class ClienteEntity implements Serializable{
@@ -38,6 +42,7 @@ public class ClienteEntity implements Serializable{
 	@Column(name="CD_TIPO_CLIENTE")
 	private Integer tipoCliente;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy="cliente")
 	private List<EnderecoEntity> listaEnderecos;
 
@@ -149,6 +154,24 @@ public class ClienteEntity implements Serializable{
 		}
 			
 		return true;
+	}
+	
+	public ClienteDTO dePara() {
+		
+		ClienteDTO cliente = new ClienteDTO();
+		
+		cliente.setCpfCnpj(this.getCpfCnpj());
+		cliente.setEmail(this.getEmail());
+		cliente.setIdCliente(this.getIdCliente());
+		cliente.setNome(this.getNome());
+		cliente.setTipoCliente(this.getTipoCliente().getCodigoTipoCliente());
+		List<EnderecoDTO> listaEnderecosDto = new ArrayList<>();
+		for(EnderecoEntity enderecoEntity : this.getListaEnderecos()) {
+			listaEnderecosDto.add(enderecoEntity.dePara());
+		}
+		cliente.setListaEnderecos(listaEnderecosDto);
+		
+		return cliente;
 	}
 
 }
