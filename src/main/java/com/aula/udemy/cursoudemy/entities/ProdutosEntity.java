@@ -32,7 +32,7 @@ public class ProdutosEntity implements Serializable{
 	private Double precoProduto;
 	
 	@ManyToMany
-	@JoinTable(name = "Produto_Categoria",
+	@JoinTable(name = "TBL_PRODUTO_CATEGORIA",
 			joinColumns = @JoinColumn(name="id_produto"),
 			inverseJoinColumns = @JoinColumn(name="id_categoria"))
 	@JsonBackReference
