@@ -1,5 +1,6 @@
 package com.aula.udemy.cursoudemy;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,18 +10,25 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.aula.udemy.cursoudemy.constants.enums.EstadoPagamentoEnum;
 import com.aula.udemy.cursoudemy.constants.enums.TipoClienteEnum;
 import com.aula.udemy.cursoudemy.entities.CategoriaEntity;
 import com.aula.udemy.cursoudemy.entities.CidadeEntity;
 import com.aula.udemy.cursoudemy.entities.ClienteEntity;
 import com.aula.udemy.cursoudemy.entities.EnderecoEntity;
 import com.aula.udemy.cursoudemy.entities.EstadoEntity;
+import com.aula.udemy.cursoudemy.entities.PagamentoComBoletonEntity;
+import com.aula.udemy.cursoudemy.entities.PagamentoComCartaoEntity;
+import com.aula.udemy.cursoudemy.entities.PagamentoEntity;
+import com.aula.udemy.cursoudemy.entities.PedidoEntity;
 import com.aula.udemy.cursoudemy.entities.ProdutosEntity;
 import com.aula.udemy.cursoudemy.repositories.CategoriasRepository;
 import com.aula.udemy.cursoudemy.repositories.CidadeRepository;
 import com.aula.udemy.cursoudemy.repositories.ClienteRepository;
 import com.aula.udemy.cursoudemy.repositories.EnderecoRepository;
 import com.aula.udemy.cursoudemy.repositories.EstadoRepository;
+import com.aula.udemy.cursoudemy.repositories.PagamentoRepository;
+import com.aula.udemy.cursoudemy.repositories.PedidoRepository;
 import com.aula.udemy.cursoudemy.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -43,13 +51,24 @@ public class CursoUdemyApplication implements CommandLineRunner{
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursoUdemyApplication.class, args);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.boot.CommandLineRunner#run(java.lang.String[])
+	 */
 	@Override
 	public void run(String... args) throws Exception {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		CategoriaEntity informatica = new CategoriaEntity(null, "Informática");
 		CategoriaEntity escritorio = new CategoriaEntity(null, "Escritório");
@@ -89,6 +108,17 @@ public class CursoUdemyApplication implements CommandLineRunner{
 		
 		List<EnderecoEntity> listaEnderecos = new ArrayList<>();
 		
+		PedidoEntity primeiroPedido = new PedidoEntity(null,formatter.parse("30/09/2017 10:32"),mariaSilva,ruaFlores);
+		PedidoEntity segundoPedido = new PedidoEntity(null,formatter.parse("10/10/2017 19:35"),mariaSilva,avenidaMatos);
+		
+		PagamentoEntity pagamentoPedidoUm = new PagamentoComCartaoEntity(null, EstadoPagamentoEnum.QUITADO, primeiroPedido, 6);
+		primeiroPedido.setPagamento(pagamentoPedidoUm);
+		
+		PagamentoEntity segundoPagamento = new PagamentoComBoletonEntity(null, EstadoPagamentoEnum.PENDENTE,segundoPedido,formatter.parse("20/10/2017 00:00"),null);
+		segundoPedido.setPagamento(segundoPagamento);
+		
+		mariaSilva.getPedidos().addAll(Arrays.asList(primeiroPedido,segundoPedido));
+		
 		listaEnderecos.add(ruaFlores);
 		listaEnderecos.add(avenidaMatos);
 		
@@ -120,6 +150,11 @@ public class CursoUdemyApplication implements CommandLineRunner{
 		
 		clienteRepository.saveAll(listaClientes);
 		
-		enderecoRepository.saveAll(listaEnderecos);		
+		enderecoRepository.saveAll(listaEnderecos);
+		
+		pedidoRepository.saveAll(Arrays.asList(primeiroPedido,segundoPedido));
+		
+		pagamentoRepository.saveAll(Arrays.asList(pagamentoPedidoUm,segundoPagamento));
+		
 	}
 }

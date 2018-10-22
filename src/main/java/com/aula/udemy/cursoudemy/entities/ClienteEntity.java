@@ -49,6 +49,9 @@ public class ClienteEntity implements Serializable{
 	@ElementCollection
 	@CollectionTable(name="TBL_TELEFONE")
 	private Set<String> listaTelefones = new HashSet<>();
+	
+	@OneToMany(mappedBy="cliente")
+	private List<PedidoEntity> pedidos = new ArrayList<>();
 
 	public ClienteEntity() {
 
@@ -116,6 +119,18 @@ public class ClienteEntity implements Serializable{
 
 	public void setListaTelefones(Set<String> listaTelefones) {
 		this.listaTelefones = listaTelefones;
+	}
+
+	public List<PedidoEntity> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<PedidoEntity> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public void setTipoCliente(Integer tipoCliente) {
+		this.tipoCliente = tipoCliente;
 	}
 
 	@Override
