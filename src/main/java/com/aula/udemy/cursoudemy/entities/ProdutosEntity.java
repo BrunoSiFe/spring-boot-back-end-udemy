@@ -2,7 +2,9 @@ package com.aula.udemy.cursoudemy.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="TBL_PRODUTO")
 public class ProdutosEntity implements Serializable{
@@ -35,8 +38,12 @@ public class ProdutosEntity implements Serializable{
 	@JoinTable(name = "TBL_PRODUTO_CATEGORIA",
 			joinColumns = @JoinColumn(name="id_produto"),
 			inverseJoinColumns = @JoinColumn(name="id_categoria"))
-	@JsonBackReference
+	@JsonIgnore
 	private List<CategoriaEntity> listaCategorias = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="id.pedido")
+	private Set<ItemPedidoEntity> itens = new HashSet<>();
 
 	public ProdutosEntity() {}
 	
@@ -44,6 +51,15 @@ public class ProdutosEntity implements Serializable{
 		this.idProduto = idProduto;
 		this.nomeProduto = nomeProduto;
 		this.precoProduto = precoProduto;
+	}
+	
+	@JsonIgnore
+	public List<PedidoEntity> getPedidos(){
+		List<PedidoEntity> listaPedidos = new ArrayList<>();
+		for(ItemPedidoEntity itemPedido : itens) {
+			listaPedidos.add(itemPedido.getPedido());
+		}
+		return listaPedidos;
 	}
 
 	public Integer getIdProduto() {
@@ -76,6 +92,15 @@ public class ProdutosEntity implements Serializable{
 
 	public void setListaCategorias(List<CategoriaEntity> listaCategorias) {
 		this.listaCategorias = listaCategorias;
+	}
+	
+
+	public Set<ItemPedidoEntity> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedidoEntity> itens) {
+		this.itens = itens;
 	}
 
 	@Override

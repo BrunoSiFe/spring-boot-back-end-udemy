@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aula.udemy.cursoudemy.dtos.ClienteDTO;
 import com.aula.udemy.cursoudemy.entities.ClienteEntity;
 import com.aula.udemy.cursoudemy.services.ClienteService;
 
@@ -19,13 +18,11 @@ public class ClienteController {
 	private ClienteService clienteService;
 	
 	@RequestMapping(value= "/{idCliente}",method=RequestMethod.GET)
-	public ResponseEntity<ClienteDTO> buscarCategoriaPorId(@PathVariable Integer idCliente) {
+	public ResponseEntity<ClienteEntity> buscarCategoriaPorId(@PathVariable Integer idCliente) {
 		
 		ClienteEntity clienteEntity = clienteService.buscarCategoriaPorId(idCliente);
 		
-		ClienteDTO cliente = clienteEntity.dePara();
-		
-		return ResponseEntity.ok(cliente);
+		return ResponseEntity.ok(clienteEntity);
 		
 	}
 }

@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import com.aula.udemy.cursoudemy.dtos.CategoriaDTO;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name="TBL_CATEGORIA")
 public class CategoriaEntity implements Serializable{
@@ -28,7 +27,6 @@ public class CategoriaEntity implements Serializable{
 	private String nome;
 	
 	@ManyToMany(mappedBy="listaCategorias")
-	@JsonManagedReference
 	private List<ProdutosEntity> listaProdutos = new ArrayList<>();
 
 	public CategoriaEntity() {

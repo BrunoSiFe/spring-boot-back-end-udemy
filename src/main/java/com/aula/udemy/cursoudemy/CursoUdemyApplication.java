@@ -17,6 +17,7 @@ import com.aula.udemy.cursoudemy.entities.CidadeEntity;
 import com.aula.udemy.cursoudemy.entities.ClienteEntity;
 import com.aula.udemy.cursoudemy.entities.EnderecoEntity;
 import com.aula.udemy.cursoudemy.entities.EstadoEntity;
+import com.aula.udemy.cursoudemy.entities.ItemPedidoEntity;
 import com.aula.udemy.cursoudemy.entities.PagamentoComBoletonEntity;
 import com.aula.udemy.cursoudemy.entities.PagamentoComCartaoEntity;
 import com.aula.udemy.cursoudemy.entities.PagamentoEntity;
@@ -27,6 +28,7 @@ import com.aula.udemy.cursoudemy.repositories.CidadeRepository;
 import com.aula.udemy.cursoudemy.repositories.ClienteRepository;
 import com.aula.udemy.cursoudemy.repositories.EnderecoRepository;
 import com.aula.udemy.cursoudemy.repositories.EstadoRepository;
+import com.aula.udemy.cursoudemy.repositories.ItemPedidoRepository;
 import com.aula.udemy.cursoudemy.repositories.PagamentoRepository;
 import com.aula.udemy.cursoudemy.repositories.PedidoRepository;
 import com.aula.udemy.cursoudemy.repositories.ProdutoRepository;
@@ -57,6 +59,9 @@ public class CursoUdemyApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursoUdemyApplication.class, args);
@@ -117,6 +122,17 @@ public class CursoUdemyApplication implements CommandLineRunner{
 		PagamentoEntity segundoPagamento = new PagamentoComBoletonEntity(null, EstadoPagamentoEnum.PENDENTE,segundoPedido,formatter.parse("20/10/2017 00:00"),null);
 		segundoPedido.setPagamento(segundoPagamento);
 		
+		ItemPedidoEntity itemPedidoComputador = new ItemPedidoEntity(primeiroPedido,mouse,0.00,1,2000.00);
+		ItemPedidoEntity itemPedidoImpressora = new ItemPedidoEntity(primeiroPedido,computador,0.00,2,80.00);
+		ItemPedidoEntity itemPedidoMouse = new ItemPedidoEntity(segundoPedido,impressora  ,100.00,1,800.00);
+		
+		primeiroPedido.getItens().addAll(Arrays.asList(itemPedidoComputador,itemPedidoImpressora));
+		segundoPedido.getItens().addAll(Arrays.asList(itemPedidoMouse));
+		
+		computador.getItens().addAll(Arrays.asList(itemPedidoComputador));
+		impressora.getItens().addAll(Arrays.asList(itemPedidoImpressora));
+		mouse.getItens().addAll(Arrays.asList(itemPedidoMouse));
+		
 		mariaSilva.getPedidos().addAll(Arrays.asList(primeiroPedido,segundoPedido));
 		
 		listaEnderecos.add(ruaFlores);
@@ -155,6 +171,8 @@ public class CursoUdemyApplication implements CommandLineRunner{
 		pedidoRepository.saveAll(Arrays.asList(primeiroPedido,segundoPedido));
 		
 		pagamentoRepository.saveAll(Arrays.asList(pagamentoPedidoUm,segundoPagamento));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(itemPedidoComputador,itemPedidoImpressora,itemPedidoMouse));
 		
 	}
 }

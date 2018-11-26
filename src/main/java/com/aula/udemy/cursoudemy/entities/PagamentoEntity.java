@@ -14,6 +14,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.aula.udemy.cursoudemy.constants.enums.EstadoPagamentoEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="TBL_PAGAMENTO")
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -28,6 +29,7 @@ public abstract class PagamentoEntity implements Serializable{
 	
 	private Integer estado;
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="id_pedido")
 	@MapsId
@@ -57,6 +59,7 @@ public abstract class PagamentoEntity implements Serializable{
 		this.estado = estado.getCodigoEstadoPagamento();
 	}
 
+	@JsonIgnore
 	public PedidoEntity getPedido() {
 		return pedido;
 	}

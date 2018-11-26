@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name="TBL_ESTADO")
 public class EstadoEntity implements Serializable{
 
@@ -25,6 +27,7 @@ public class EstadoEntity implements Serializable{
 	private String nome;
 
 	@OneToMany(mappedBy="estado")
+	@JsonIgnore	
 	private List<CidadeEntity> listaCidades = new ArrayList<>();
 
 	public EstadoEntity() {

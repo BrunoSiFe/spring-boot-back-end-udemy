@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.aula.udemy.cursoudemy.constants.enums.EstadoPagamentoEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity(name="TBL_PAGAMENTO_BOLETO")
 public class PagamentoComBoletonEntity extends PagamentoEntity{
@@ -13,9 +14,11 @@ public class PagamentoComBoletonEntity extends PagamentoEntity{
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="DT_VENCIMENTO")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date dtVencimento;
 	
 	@Column(name="DT_PAGAMENTO")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date dtPagamento;
 	
 	public PagamentoComBoletonEntity() {}

@@ -2,6 +2,8 @@ package com.aula.udemy.cursoudemy.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="TBL_PEDIDO")
 public class PedidoEntity implements Serializable{
@@ -24,6 +30,7 @@ public class PedidoEntity implements Serializable{
 	private Integer idPedido;
 
 	@Column(name="DT_PEDIDO")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date dataPedido;
 	
 	@OneToOne(cascade=CascadeType.ALL, mappedBy ="pedido")
@@ -34,8 +41,12 @@ public class PedidoEntity implements Serializable{
 	private ClienteEntity cliente;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="id_endereco")
 	private EnderecoEntity enderecoEntrega;
+	
+	@OneToMany(mappedBy="id.produto")
+	private Set<ItemPedidoEntity> itens = new HashSet<>();
 
 	public PedidoEntity() {
 	}
@@ -86,6 +97,14 @@ public class PedidoEntity implements Serializable{
 
 	public void setEnderecoEntrega(EnderecoEntity enderecoEntrega) {
 		this.enderecoEntrega = enderecoEntrega;
+	}
+	
+	public Set<ItemPedidoEntity> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedidoEntity> itens) {
+		this.itens = itens;
 	}
 
 	@Override

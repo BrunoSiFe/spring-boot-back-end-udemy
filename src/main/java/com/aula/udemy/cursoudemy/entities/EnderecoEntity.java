@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.aula.udemy.cursoudemy.dtos.EnderecoDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="TBL_ENDERECO")
 public class EnderecoEntity implements Serializable{
@@ -38,7 +38,7 @@ public class EnderecoEntity implements Serializable{
 	@Column(name="ds_cep")
 	private String cep;
 
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="id_cliente")
 	private ClienteEntity cliente;
@@ -112,6 +112,7 @@ public class EnderecoEntity implements Serializable{
 		this.cep = cep;
 	}
 
+	@JsonIgnore
 	public ClienteEntity getCliente() {
 		return cliente;
 	}

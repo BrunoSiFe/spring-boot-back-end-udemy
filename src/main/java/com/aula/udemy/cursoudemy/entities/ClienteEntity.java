@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import com.aula.udemy.cursoudemy.constants.enums.TipoClienteEnum;
 import com.aula.udemy.cursoudemy.dtos.ClienteDTO;
 import com.aula.udemy.cursoudemy.dtos.EnderecoDTO;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="TBL_CLIENTE")
 public class ClienteEntity implements Serializable{
@@ -42,7 +42,6 @@ public class ClienteEntity implements Serializable{
 	@Column(name="CD_TIPO_CLIENTE")
 	private Integer tipoCliente;
 
-	@JsonManagedReference
 	@OneToMany(mappedBy="cliente")
 	private List<EnderecoEntity> listaEnderecos;
 
@@ -50,6 +49,7 @@ public class ClienteEntity implements Serializable{
 	@CollectionTable(name="TBL_TELEFONE")
 	private Set<String> listaTelefones = new HashSet<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="cliente")
 	private List<PedidoEntity> pedidos = new ArrayList<>();
 
@@ -121,6 +121,7 @@ public class ClienteEntity implements Serializable{
 		this.listaTelefones = listaTelefones;
 	}
 
+	
 	public List<PedidoEntity> getPedidos() {
 		return pedidos;
 	}
