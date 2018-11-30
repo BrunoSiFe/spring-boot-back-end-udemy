@@ -39,8 +39,8 @@ public class CategoriaService {
 	}
 	
 	public CategoriaEntity atualizarCategoria(CategoriaDTO categoria) {
-		buscarCategoriaPorId(categoria.getIdCategoria());
-		
+		CategoriaEntity categoriaEntity = buscarCategoriaPorId(categoria.getIdCategoria());
+		atualizarDados(categoria,categoriaEntity);
 		return categoriaRepository.save(convertDtoToEntity(categoria));
 	}
 	
@@ -65,6 +65,10 @@ public class CategoriaService {
 	
 	private CategoriaEntity convertDtoToEntity(CategoriaDTO categoria) {
 		return new CategoriaEntity(categoria.getIdCategoria(),categoria.getNome());
+	}
+	
+	private void atualizarDados(CategoriaDTO categoriaDTO, CategoriaEntity categoriaEntity) {
+		categoriaEntity.setNome(categoriaDTO.getNome());
 	}
 
 }

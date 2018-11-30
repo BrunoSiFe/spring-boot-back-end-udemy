@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -31,7 +32,7 @@ public class ClienteEntity implements Serializable{
 	@Column(name="DS_NOME")
 	private String nome;
 
-	@Column(name="DS_EMAIL")
+	@Column(name="DS_EMAIL",unique=true)
 	private String email;
 
 	@Column(name="DS_CPF_CNPJ")
@@ -40,8 +41,8 @@ public class ClienteEntity implements Serializable{
 	@Column(name="CD_TIPO_CLIENTE")
 	private Integer tipoCliente;
 
-	@OneToMany(mappedBy="cliente")
-	private List<EnderecoEntity> listaEnderecos;
+	@OneToMany(mappedBy="cliente",cascade=CascadeType.ALL)
+	private List<EnderecoEntity> listaEnderecos = new ArrayList<>();
 
 	@ElementCollection
 	@CollectionTable(name="TBL_TELEFONE")

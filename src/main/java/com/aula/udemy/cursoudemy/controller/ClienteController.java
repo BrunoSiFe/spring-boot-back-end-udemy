@@ -1,5 +1,6 @@
 package com.aula.udemy.cursoudemy.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.aula.udemy.cursoudemy.dtos.ClienteDTO;
+import com.aula.udemy.cursoudemy.dtos.ClienteNewDTO;
 import com.aula.udemy.cursoudemy.entities.ClienteEntity;
 import com.aula.udemy.cursoudemy.services.ClienteService;
 
@@ -27,14 +30,24 @@ public class ClienteController {
 	private ClienteService clienteService;
 	
 	@RequestMapping(value= "/{idCliente}",method=RequestMethod.GET)
-	public ResponseEntity<ClienteDTO> buscarClientePorId(@PathVariable Integer idCliente) {
+	public ResponseEntity<ClienteEntity> buscarClientePorId(@PathVariable Integer idCliente) {
 		
 		ClienteEntity clienteEntity = clienteService.buscarClientePorId(idCliente);
 		
-		ClienteDTO cliente = new ClienteDTO(clienteEntity);
+		return ResponseEntity.ok(clienteEntity);
 		
-		return ResponseEntity.ok(cliente);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> inserirDto(@RequestBody @Valid ClienteNewDTO clienteNewDto) {
+
+		ClienteEntity clienteEntity = clienteService.inserirCliente(clienteNewDto);
+
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idCategoria}")
+				.buildAndExpand(clienteEntity.getIdCliente()).toUri();
 		
+		return ResponseEntity.created(uri).build();
+
 	}
 	
 	@RequestMapping(value = "/{idCliente}", method = RequestMethod.PATCH)
