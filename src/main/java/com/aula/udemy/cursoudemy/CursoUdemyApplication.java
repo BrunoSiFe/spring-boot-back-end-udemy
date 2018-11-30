@@ -77,6 +77,14 @@ public class CursoUdemyApplication implements CommandLineRunner{
 		
 		CategoriaEntity informatica = new CategoriaEntity(null, "Informática");
 		CategoriaEntity escritorio = new CategoriaEntity(null, "Escritório");
+		CategoriaEntity camaMesaBanho = new CategoriaEntity(null, "Cama,Mesa e Banho");
+		CategoriaEntity higiene = new CategoriaEntity(null, "Higiene");
+		CategoriaEntity roupas = new CategoriaEntity(null, "Roupas");
+		CategoriaEntity casa = new CategoriaEntity(null, "Casa");
+		CategoriaEntity eletronicos = new CategoriaEntity(null, "Eletrônicos");
+		CategoriaEntity escolar = new CategoriaEntity(null, "Escolar");
+		CategoriaEntity alimentos = new CategoriaEntity(null, "Alimentos");
+		CategoriaEntity acougue = new CategoriaEntity(null, "Açougue");
 		
 		List<CategoriaEntity> listaCategoriasInstanciadas = new ArrayList<>();
 		
@@ -148,6 +156,14 @@ public class CursoUdemyApplication implements CommandLineRunner{
 		
 		listaCategoriasInstanciadas.add(informatica);
 		listaCategoriasInstanciadas.add(escritorio);
+		listaCategoriasInstanciadas.add(camaMesaBanho);
+		listaCategoriasInstanciadas.add(higiene);
+		listaCategoriasInstanciadas.add(roupas);
+		listaCategoriasInstanciadas.add(casa);
+		listaCategoriasInstanciadas.add(eletronicos);
+		listaCategoriasInstanciadas.add(escolar);
+		listaCategoriasInstanciadas.add(alimentos);
+		listaCategoriasInstanciadas.add(acougue);
 		
 		informatica.getListaProdutos().addAll(Arrays.asList(computador,mouse,impressora));
 		escritorio.getListaProdutos().add(impressora);

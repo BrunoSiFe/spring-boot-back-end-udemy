@@ -1,4 +1,4 @@
-package com.aula.udemy.cursoudemy.controller.exceptions;
+package com.aula.udemy.cursoudemy.controller.exceptions.dto;
 
 public class StandartErrorDTO {
 	

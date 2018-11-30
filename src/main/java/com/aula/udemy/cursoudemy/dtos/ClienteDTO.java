@@ -1,33 +1,46 @@
 package com.aula.udemy.cursoudemy.dtos;
 
-import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.aula.udemy.cursoudemy.entities.ClienteEntity;
 
 public class ClienteDTO {
 	
 	private Integer idCliente;
 
+	@NotEmpty(message="O campo é obrigatório.")
+	@Length(min=5, max=120 ,message="O campo deve ter entre 5 e 120 caracteres.")
 	private String nome;
 
+	@NotEmpty(message="O campo é obrigatório.")
+	@Email(message="Email Inválido.")
 	private String email;
 
 	private String cpfCnpj;
 
 	private Integer tipoCliente;
 
-	private List<EnderecoDTO> listaEnderecos;
-
 	public ClienteDTO() {
 	}
 
-	public ClienteDTO(Integer idCliente, String nome, String email, String cpfCnpj, Integer tipoCliente,
-			List<EnderecoDTO> listaEnderecos) {
+	public ClienteDTO(Integer idCliente, String nome, String email, String cpfCnpj, Integer tipoCliente) {
 		super();
 		this.idCliente = idCliente;
 		this.nome = nome;
 		this.email = email;
 		this.cpfCnpj = cpfCnpj;
 		this.tipoCliente = tipoCliente;
-		this.listaEnderecos = listaEnderecos;
+	}
+	
+	public ClienteDTO(ClienteEntity cliente) {
+		this.idCliente = cliente.getIdCliente();
+		this.nome = cliente.getNome();
+		this.email = cliente.getEmail();
+		this.cpfCnpj = cliente.getCpfCnpj();
+		this.tipoCliente = cliente.getTipoCliente().getCodigoTipoCliente();
 	}
 
 	public Integer getIdCliente() {
@@ -69,14 +82,5 @@ public class ClienteDTO {
 	public void setTipoCliente(Integer tipoCliente) {
 		this.tipoCliente = tipoCliente;
 	}
-
-	public List<EnderecoDTO> getListaEnderecos() {
-		return listaEnderecos;
-	}
-
-	public void setListaEnderecos(List<EnderecoDTO> listaEnderecos) {
-		this.listaEnderecos = listaEnderecos;
-	}
-	
 	
 }

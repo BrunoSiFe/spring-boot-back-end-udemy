@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.aula.udemy.cursoudemy.dtos.CategoriaDTO;
-
 @Entity(name="TBL_CATEGORIA")
 public class CategoriaEntity implements Serializable{
 
@@ -94,17 +92,6 @@ public class CategoriaEntity implements Serializable{
 		}
 		
 		return true;
-	}
-	
-	public CategoriaDTO dePara() {
-		
-		CategoriaDTO categoria = new CategoriaDTO();
-		
-		categoria.setIdCategoria(this.getIdCategoria());
-		categoria.setNome(this.getNome());
-		categoria.setListaProdutos(this.getListaProdutos());
-		
-		return categoria;
 	}
 
 }

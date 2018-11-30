@@ -1,17 +1,29 @@
 package com.aula.udemy.cursoudemy.dtos;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-import com.aula.udemy.cursoudemy.entities.ProdutosEntity;
+import javax.validation.constraints.NotEmpty;
 
-public class CategoriaDTO {
+import org.hibernate.validator.constraints.Length;
+
+import com.aula.udemy.cursoudemy.entities.CategoriaEntity;
+
+public class CategoriaDTO implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private Integer idCategoria;
-
-	private String nome;
 	
-	private List<ProdutosEntity> listaProdutos = new ArrayList<>();
+	@NotEmpty(message="O Campo é Obrigatório.")
+	@Length(min=5,max=80,message="O campo deve ter entre 5 e 80 caracteres.")
+	private String nome;
+
+	public CategoriaDTO() {}
+	
+	public CategoriaDTO(CategoriaEntity categoria) {
+		this.idCategoria = categoria.getIdCategoria();
+		this.nome = categoria.getNome();
+	}
 
 	public Integer getIdCategoria() {
 		return idCategoria;
@@ -27,14 +39,6 @@ public class CategoriaDTO {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public List<ProdutosEntity> getListaProdutos() {
-		return listaProdutos;
-	}
-
-	public void setListaProdutos(List<ProdutosEntity> listaProdutos) {
-		this.listaProdutos = listaProdutos;
 	}
 
 }

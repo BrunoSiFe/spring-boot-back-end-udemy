@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.aula.udemy.cursoudemy.dtos.EnderecoDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="TBL_ENDERECO")
@@ -166,18 +165,4 @@ public class EnderecoEntity implements Serializable{
 		return true;
 	}
 
-	public EnderecoDTO dePara() {
-		
-		EnderecoDTO endereco = new EnderecoDTO();
-		
-		endereco.setBairro(this.getBairro());
-		endereco.setCep(this.getCep());
-		endereco.setComplemento(this.getComplemento());
-		endereco.setLogradouro(this.getLogradouro());
-		endereco.setIdEndereco(this.getIdEndereco());
-		endereco.setNumero(this.getNumero());
-		
-		return endereco;
-		
-	}
 }

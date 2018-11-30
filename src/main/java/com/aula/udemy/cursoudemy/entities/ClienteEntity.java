@@ -16,8 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.aula.udemy.cursoudemy.constants.enums.TipoClienteEnum;
-import com.aula.udemy.cursoudemy.dtos.ClienteDTO;
-import com.aula.udemy.cursoudemy.dtos.EnderecoDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="TBL_CLIENTE")
@@ -62,7 +60,7 @@ public class ClienteEntity implements Serializable{
 		this.nome = nome;
 		this.email = email;
 		this.cpfCnpj = cpfCnpj;
-		this.tipoCliente = tipoCliente.getCodigoTipoCliente();
+		this.tipoCliente = (tipoCliente != null) ? tipoCliente.getCodigoTipoCliente() : null;
 	}
 
 	public Integer getIdCliente() {
@@ -170,24 +168,6 @@ public class ClienteEntity implements Serializable{
 		}
 			
 		return true;
-	}
-	
-	public ClienteDTO dePara() {
-		
-		ClienteDTO cliente = new ClienteDTO();
-		
-		cliente.setCpfCnpj(this.getCpfCnpj());
-		cliente.setEmail(this.getEmail());
-		cliente.setIdCliente(this.getIdCliente());
-		cliente.setNome(this.getNome());
-		cliente.setTipoCliente(this.getTipoCliente().getCodigoTipoCliente());
-		List<EnderecoDTO> listaEnderecosDto = new ArrayList<>();
-		for(EnderecoEntity enderecoEntity : this.getListaEnderecos()) {
-			listaEnderecosDto.add(enderecoEntity.dePara());
-		}
-		cliente.setListaEnderecos(listaEnderecosDto);
-		
-		return cliente;
 	}
 
 }
