@@ -129,10 +129,6 @@ public class ClienteEntity implements Serializable{
 		this.pedidos = pedidos;
 	}
 
-	public void setTipoCliente(Integer tipoCliente) {
-		this.tipoCliente = tipoCliente;
-	}
-
 	@Override
 	public int hashCode() {
 		

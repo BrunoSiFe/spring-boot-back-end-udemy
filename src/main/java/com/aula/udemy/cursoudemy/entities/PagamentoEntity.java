@@ -15,9 +15,11 @@ import javax.persistence.OneToOne;
 
 import com.aula.udemy.cursoudemy.constants.enums.EstadoPagamentoEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity(name="TBL_PAGAMENTO")
 @Inheritance(strategy=InheritanceType.JOINED)
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME,include=JsonTypeInfo.As.PROPERTY,property ="@type")
 public abstract class PagamentoEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

@@ -4,8 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.aula.udemy.cursoudemy.constants.enums.EstadoPagamentoEnum;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity(name="TBL_PAGAMENTO_CARTAO")
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartaoEntity extends PagamentoEntity {
 
 	private static final long serialVersionUID = 1L;

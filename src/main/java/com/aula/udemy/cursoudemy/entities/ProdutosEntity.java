@@ -29,7 +29,7 @@ public class ProdutosEntity implements Serializable{
 	private Integer idProduto;
 	
 	@Column(name="DS_NOME_PRODUTO")
-	private String nomeProduto;
+	private String nome;
 	
 	@Column(name="VL_PRECO_PRODUTO")
 	private Double precoProduto;
@@ -49,7 +49,7 @@ public class ProdutosEntity implements Serializable{
 	
 	public ProdutosEntity(Integer idProduto, String nomeProduto, Double precoProduto) {
 		this.idProduto = idProduto;
-		this.nomeProduto = nomeProduto;
+		this.nome = nomeProduto;
 		this.precoProduto = precoProduto;
 	}
 	
@@ -71,11 +71,11 @@ public class ProdutosEntity implements Serializable{
 	}
 
 	public String getNomeProduto() {
-		return nomeProduto;
+		return nome;
 	}
 
 	public void setNomeProduto(String nomeProduto) {
-		this.nomeProduto = nomeProduto;
+		this.nome = nomeProduto;
 	}
 
 	public Double getPrecoProduto() {

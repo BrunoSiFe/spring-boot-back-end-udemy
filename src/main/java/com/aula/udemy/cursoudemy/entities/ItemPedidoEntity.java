@@ -38,6 +38,10 @@ public class ItemPedidoEntity implements Serializable{
 	public ItemPedidoEntity() {
 
 	}
+	
+	public Double getSubTotal() {
+		return (this.vlPreco - this.vlDesconto) * this.qtdComprada;
+	}
 
 	public ItemPedidoEntityPK getId() {
 		return id;
@@ -78,6 +82,14 @@ public class ItemPedidoEntity implements Serializable{
 
 	public ProdutosEntity getProduto() {
 		return this.id.getProduto();
+	}
+	
+	public void setPedido(PedidoEntity pedidoEntity) {
+		id.setPedido(pedidoEntity);
+	}
+	
+	public void setProduto(ProdutosEntity produtosEntity) {
+		id.setProduto(produtosEntity);
 	}
 
 	@Override

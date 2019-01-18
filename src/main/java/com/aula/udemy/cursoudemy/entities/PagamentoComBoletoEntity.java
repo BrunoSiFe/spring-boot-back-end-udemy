@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 
 import com.aula.udemy.cursoudemy.constants.enums.EstadoPagamentoEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity(name="TBL_PAGAMENTO_BOLETO")
-public class PagamentoComBoletonEntity extends PagamentoEntity{
+@JsonTypeName("pagamentoComBoleto")
+public class PagamentoComBoletoEntity extends PagamentoEntity{
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,9 +23,9 @@ public class PagamentoComBoletonEntity extends PagamentoEntity{
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date dtPagamento;
 	
-	public PagamentoComBoletonEntity() {}
+	public PagamentoComBoletoEntity() {}
 
-	public PagamentoComBoletonEntity(Integer idProduto, EstadoPagamentoEnum estado, PedidoEntity pedido,Date dtVencimento, Date dtPagamento) {
+	public PagamentoComBoletoEntity(Integer idProduto, EstadoPagamentoEnum estado, PedidoEntity pedido,Date dtVencimento, Date dtPagamento) {
 		super(idProduto, estado, pedido);
 		this.dtPagamento = dtPagamento;
 		this.dtVencimento = dtVencimento;

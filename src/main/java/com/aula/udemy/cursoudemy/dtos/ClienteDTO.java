@@ -6,7 +6,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.aula.udemy.cursoudemy.entities.ClienteEntity;
+import com.aula.udemy.cursoudemy.services.annotations.ClienteUpdate;
 
+@ClienteUpdate
 public class ClienteDTO {
 	
 	private Integer idCliente;
