@@ -1,6 +1,8 @@
 package com.aula.udemy.cursoudemy.entities;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -117,4 +119,21 @@ public class ItemPedidoEntity implements Serializable{
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append("	"+getProduto().getNomeProduto());
+		builder.append("\n	Quantidade Comprada : ");
+		builder.append(getQtdComprada());
+		builder.append("\n	Preço Unitário : ");
+		builder.append(nf.format(getVlPreco()));
+		builder.append("\n	Subtotal : ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n\n");
+		return builder.toString();
+	}
+	
+	
 }

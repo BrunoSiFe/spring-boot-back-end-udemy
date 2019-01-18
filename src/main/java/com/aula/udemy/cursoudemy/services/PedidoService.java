@@ -3,6 +3,8 @@ package com.aula.udemy.cursoudemy.services;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,7 @@ public class PedidoService {
 					new ObjectNotFoundException("Objeto não encontrado! Id: " + idPedido + ", Tipo: " + PedidoEntity.class.getName())); 
 	}
 	
+	@Transactional
 	public PedidoEntity inserirPedido(PedidoEntity pedidoEntity) {
 		pedidoEntity.setIdPedido(null);
 		pedidoEntity.setDataPedido(new Date());
@@ -61,10 +64,11 @@ public class PedidoService {
 		
 		for(ItemPedidoEntity itemPedido : pedidoEntity.getItens()) {
 			itemPedido.setVlDesconto(0.0);
-			itemPedido.setVlPreco(produtosService.buscarProdutoPorId(itemPedido.getProduto().getIdProduto()).getPrecoProduto());
+			itemPedido.setProduto(produtosService.buscarProdutoPorId(itemPedido.getProduto().getIdProduto()));
+			itemPedido.setVlPreco(itemPedido.getProduto().getPrecoProduto());
 			itemPedido.setPedido(pedidoEntity);
 		}
-		
+		System.out.println(pedidoEntity);
 		itemPedidoRepository.saveAll(pedidoEntity.getItens());
 		return pedidoEntity;
 	}
